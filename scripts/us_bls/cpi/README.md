@@ -126,64 +126,32 @@ See About the Import > Status above for context.
 
 ```
 {
-    "import_specifications": [
+  "import_specifications": [
+    {
+      "import_name": "BLS_CPI",
+      "curator_emails": [],
+      "provenance_url": "https://www.bls.gov/cpi/",
+      "provenance_description": "U.S. Bureau of Labor Statistics Consumer Price Index.BLS publishes three main types of CPIs: CPI-U, CPI-W, and C-CPI-U. CPI-U stands for CPI for All Urban Consumers. CPI-W stands for CPI for Urban Wage Earners and Clerical Workers. The two are both unchained and use the same basket of goods and prices. The difference is their population group. C-CPI-U stands for Chained CPI for All Urban Consumers. It is the chained version of CPI-U. Each of the three can have seasonally adjusted and unadjusted series.",
+      "scripts": ["generate_csv.py"],
+      "import_inputs": [
         {
-            "import_name": "USBLS_CPI_U",
-            "curator_emails": [
-                "shijunjie@google.com"
-            ],
-            "provenance_url": "https://www.bls.gov/cpi/",
-            "provenance_description": "U.S. Bureau of Labor Statistics Consumer Price Index for All Urban Consumers",
-            "scripts": [
-                "generate_csv_mcf.py"
-            ],
-            "import_inputs": [
-                {
-                    "template_mcf": "cpi_u.tmcf",
-                    "cleaned_csv": "cpi_u.csv",
-                    "node_mcf": "cpi_u.mcf"
-                }
-            ],
-            "cron_schedule": "0 17 15 * *"
+          "template_mcf": "cpi_u.tmcf",
+          "cleaned_csv": "output/cpi_u_1913_2024.csv"
         },
         {
-            "import_name": "USBLS_CPI_W",
-            "curator_emails": [
-                "shijunjie@google.com"
-            ],
-            "provenance_url": "https://www.bls.gov/cpi/",
-            "provenance_description": "U.S. Bureau of Labor Statistics Consumer Price Index for Urban Wage Earners and Clerical Workers",
-            "scripts": [
-                "generate_csv_mcf.py"
-            ],
-            "import_inputs": [
-                {
-                    "template_mcf": "cpi_w.tmcf",
-                    "cleaned_csv": "cpi_w.csv",
-                    "node_mcf": "cpi_w.mcf"
-                }
-            ],
-            "cron_schedule": "15 17 15 * *"
+           "template_mcf": "cpi_w.tmcf",
+          "cleaned_csv": "output/cpi_w_1913_2024.csv"
         },
         {
-            "import_name": "USBLS_C_CPI_U",
-            "curator_emails": [
-                "shijunjie@google.com"
-            ],
-            "provenance_url": "https://www.bls.gov/cpi/",
-            "provenance_description": "U.S. Bureau of Labor Statistics Chained Consumer Price Index for All Urban Consumers",
-            "scripts": [
-                "generate_csv_mcf.py"
-            ],
-            "import_inputs": [
-                {
-                    "template_mcf": "c_cpi_u.tmcf",
-                    "cleaned_csv": "c_cpi_u.csv",
-                    "node_mcf": "c_cpi_u.mcf"
-                }
-            ],
-            "cron_schedule": "30 17 15 * *"
+           "template_mcf": "c_cpi_u.tmcf",
+		  "cleaned_csv": "output/c_cpi_u_1999_2024.csv"
         }
-    ]
+      ],
+      "cron_schedule": "5 3 15 * *"
+    }
+  ]
 }
 ```
+
+Note: Data is available from 1947 in source , so the historical data is retained in GCP bucket (unresolved_mcf/bls/cpi/HistoricalData) from 1913 to 1946.
+Auto-refresh is done only for 1947 and more year data.
