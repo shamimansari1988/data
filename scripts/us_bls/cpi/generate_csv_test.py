@@ -15,7 +15,7 @@ import unittest
 import os
 from absl import logging
 import pandas as pd
-from generate_csv import process
+from .generate_csv import process
 from pathlib import Path
 
 _MODULE_DIR = os.path.dirname(__file__)
