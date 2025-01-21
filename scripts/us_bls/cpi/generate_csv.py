@@ -109,8 +109,7 @@ def process(_INPUT_FILE_PATH, series_id, series_name, _OUTOUT_FILE_PATH,
                             sep=r"\s+",
                             dtype="str")
         # "M13" is annual averages
-        in_df = in_df[(in_df["series_id"] == series_id) &
-                      (in_df["period"] != "M13")]
+        in_df = in_df[(in_df["series_id"] == series_id) & (in_df["period"] != "M13")]
         # Format "date" column as "YYYY-MM"
         in_df["date"] = in_df["year"] + "-" + in_df["period"].str[-2:]
         in_df = in_df[["date", "value"]]
@@ -118,13 +117,13 @@ def process(_INPUT_FILE_PATH, series_id, series_name, _OUTOUT_FILE_PATH,
         # Convert 'date' column to datetime format
         logging.info(f"date_from_start_processing {date_from_start_processing}")
         in_df['date'] = pd.to_datetime(in_df['date'], format='%Y-%m')
-        in_df = in_df[in_df['date'].dt.year > date_from_start_processing]
+        in_df = in_df[in_df['date'].dt.year > int(date_from_start_processing)]
         in_df['date'] = in_df['date'].dt.strftime('%Y-%m')
         logging.info(f"Data frame before writing to output csv file {in_df}")
         in_df.to_csv(_OUTOUT_FILE_PATH + "/" + series_name + ".csv",
                      index=False)
     except Exception as e:
-        logging.fatal(f"Error while processing input files {e}")
+        logging.fatal(f"Error while processing input files {e} {date_from_start_processing}")
 
 
 def main(_):

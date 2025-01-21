@@ -15,16 +15,16 @@ import unittest
 import os
 from absl import logging
 import pandas as pd
-from .generate_csv import process
+from generate_csv import process
+from pathlib import Path
 
 _MODULE_DIR = os.path.dirname(__file__)
 TEST_DATA_DIR = os.path.join(_MODULE_DIR, 'test_data')
 output_dir = os.path.join(TEST_DATA_DIR, 'output_dir')
+Path(output_dir).mkdir(parents=True, exist_ok=True)
 series_id = "CUSR0000SA0"
 series_name = "cpi_u_1913_2024"
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
 class TestGenerateCSV(unittest.TestCase):
 
     def __init__(self, methodName: str = ...) -> None:
@@ -32,7 +32,7 @@ class TestGenerateCSV(unittest.TestCase):
 
     def test_GenerateCSV_data(self):
         #Calling process method
-        process(TEST_DATA_DIR, series_id, series_name, output_dir, int(46))
+        process(TEST_DATA_DIR, series_id, series_name, output_dir, int(1946))
         expected_df = pd.read_csv(output_dir + "/" + series_name + ".csv",
                                   sep=r"\s+",
                                   dtype="str")
